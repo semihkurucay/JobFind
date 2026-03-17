@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kariyer Portalı | Geleceğini Şekillendir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --bg-color: #f8fafc; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+            --primary-accent: #6366f1; --primary-hover: #4f46e5; --border-light: #e2e8f0;
+            --radius-md: 16px; --radius-sm: 10px;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); -webkit-font-smoothing: antialiased; }
+        .hidden { display: none !important; }
+        
+        .text-primary { color: var(--primary-accent) !important; }
+        .bg-primary { background-color: var(--primary-accent) !important; }
+        
+        .glass-header { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand { font-weight: 800; font-size: 1.5rem; color: var(--text-main) !important; letter-spacing: -0.5px; }
+        .navbar-brand i { color: var(--primary-accent); }
+        
+        .ui-card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
+        .nav-segment { display: inline-flex; background: #f1f5f9; padding: 6px; border-radius: 12px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center;}
+        .nav-segment button { background: transparent; border: none; padding: 8px 20px; border-radius: 8px; font-weight: 600; color: var(--text-muted); font-size: 0.95rem; transition: all 0.2s ease; margin: 2px;}
+        .nav-segment button.active { background: var(--card-bg); color: var(--primary-accent); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .nav-segment button:hover:not(.active) { color: var(--text-main); }
+        
+        .btn-indigo { background-color: var(--primary-accent); color: white; font-weight: 600; border-radius: var(--radius-sm); border: none; padding: 10px 24px; transition: 0.3s;}
+        .btn-indigo:hover { background-color: var(--primary-hover); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); transform: translateY(-1px);}
+        .btn-outline-primary { color: var(--primary-accent) !important; border: 2px solid var(--primary-accent) !important; background-color: transparent !important; font-weight: 600;border-radius: var(--radius-sm) !important;padding: 8px 22px !important; transition: 0.3s;}
+		.btn-outline-primary:hover { color: white !important; background-color: #4f46e5 !important; border-color: #4f46e5 !important; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); transform: translateY(-1px);}
+		.btn-outline-indigo { border: 2px solid var(--primary-accent); color: var(--primary-accent); font-weight: 600; border-radius: var(--radius-sm); padding: 8px 24px; background: transparent; transition: 0.3s;}
+        .btn-outline-indigo:hover { background-color: var(--primary-accent); color: #4f46e5; transform: translateY(-1px);}
+        
+        .form-control, .form-select { border-radius: var(--radius-sm); border: 1px solid var(--border-light); padding: 12px 16px; background-color: #f8fafc; font-weight: 500; }
+        .form-control:focus, .form-select:focus { background-color: white; border-color: var(--primary-accent); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
+        
+        .list-item { border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 12px; background: white; transition: 0.2s; }
+        .list-item:hover { border-color: var(--primary-accent); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        .login-wrapper { display: flex; align-items: center; justify-content: center; margin-top: 40px; }
+        .login-box { width: 100%; max-width: 450px; }
+        .star-rating { color: #f59e0b; letter-spacing: 2px; }
+        
+        .hero-section { background: linear-gradient(145deg, #ffffff 0%, #eef2ff 100%); border-radius: 24px; padding: 80px 40px; text-align: center; border: 1px solid rgba(99, 102, 241, 0.1); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .hero-badge { display: inline-block; background: white; color: var(--primary-accent); font-weight: 700; font-size: 0.85rem; padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(99, 102, 241, 0.2); margin-bottom: 24px; box-shadow: 0 2px 10px rgba(99, 102, 241, 0.1); }
+        .feature-box { background: white; padding: 30px; border-radius: 20px; border: 1px solid var(--border-light); height: 100%; transition: 0.3s; }
+        .feature-box:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.04); border-color: var(--primary-accent); }
+        .feature-icon { width: 60px; height: 60px; background: #eef2ff; color: var(--primary-accent); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px; }
+        
+        .company-link { cursor: pointer; text-decoration: none; color: var(--primary-accent); transition: 0.2s; border-bottom: 1px dashed transparent; }
+        .company-link:hover { border-bottom-color: var(--primary-accent); }
+        
+        .stat-card { background: white; border-radius: 20px; padding: 25px 15px; border: 1px solid var(--border-light); text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .stat-number { font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<nav class="glass-header py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="#" class="navbar-brand text-decoration-none" onclick="loadPublicView()">
+            <i class="bi bi-layers-half me-2"></i>KariyerPort
+        </a>
+        <div id="navAuthArea" class="d-flex align-items-center gap-3"></div>
+    </div>
+</nav>
+
+<div class="container mt-4 pb-5">
+
+    <div id="publicView">
+        <div class="hero-section mb-5">
+            <span class="hero-badge"><i class="bi bi-stars me-1"></i> Yeni Nesil İş Platformu</span>
+            <h1 class="display-4 fw-bolder text-dark mb-4" style="letter-spacing: -1px;">
+                Kariyerinde <span class="text-primary">Şeffaf</span> ve <br> Güvenli Bir Adım At
+            </h1>
+            <p class="lead text-muted mx-auto mb-5" style="max-width: 700px; font-size: 1.15rem;">
+                KariyerPort sıradan bir ilan panosu değildir. Şirketlerin çalışma kültürünü önceden görün, çalışan yorumlarını inceleyin ve değerinize değer katacak ekibe güvenle katılın.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <button class="btn btn-indigo btn-lg px-4" onclick="document.getElementById('publicMainSection').scrollIntoView({behavior: 'smooth'}); switchPublicTab('jobs');">
+                    <i class="bi bi-rocket-takeoff me-2"></i> İlanları Keşfet
+                </button>
+                <button class="btn btn-outline-indigo btn-lg px-4 bg-white" onclick="showAuthView('register')">
+                    <i class="bi bi-person-plus me-2"></i> Aramıza Katıl
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5 pb-2">
+            <div class="col-md-3 col-6"><div class="stat-card"><div class="stat-number text-primary" id="statCompanies">0</div><div class="text-muted fw-semibold small text-uppercase">Kayıtlı Şirket</div></div></div>
+            <div class="col-md-3 col-6"><div class="stat-card"><div class="stat-number text-success" id="statJobs">0</div><div class="text-muted fw-semibold small text-uppercase">Toplam İlan</div></div></div>
+            <div class="col-md-3 col-6"><div class="stat-card"><div class="stat-number text-warning" id="statApps">0</div><div class="text-muted fw-semibold small text-uppercase">Yapılan Başvuru</div></div></div>
+            <div class="col-md-3 col-6"><div class="stat-card"><div class="stat-number text-info" id="statApproved">0</div><div class="text-muted fw-semibold small text-uppercase">İşe Alım (Onay)</div></div></div>
+        </div>
+
+        <div class="row g-4 mb-5 pb-5 border-bottom">
+            <div class="col-md-4"><div class="feature-box"><div class="feature-icon"><i class="bi bi-search"></i></div><h5 class="fw-bold mb-2 text-dark">Ne Hedefliyoruz?</h5><p class="text-muted small mb-0">Kapalı kapılar ardındaki iş alım süreçlerini bitiriyoruz. KariyerPort'ta iş arayanlar, başvurdukları şirketin iç dinamiklerine hakim olurlar.</p></div></div>
+            <div class="col-md-4"><div class="feature-box"><div class="feature-icon"><i class="bi bi-star-half"></i></div><h5 class="fw-bold mb-2 text-dark">Şeffaf Değerlendirmeler</h5><p class="text-muted small mb-0">Gerçek çalışanlar ve adaylar tarafından yapılan şirket yorumlarını ve puanlarını okuyarak sürprizlerle karşılaşmaktan kurtulun.</p></div></div>
+            <div class="col-md-4"><div class="feature-box"><div class="feature-icon"><i class="bi bi-lightning-charge"></i></div><h5 class="fw-bold mb-2 text-dark">Hızlı ve Kolay Başvuru</h5><p class="text-muted small mb-0">Her şirket için ayrı form doldurmaya son. Dinamik CV'nizi bir kez hazırlayın ve hayalinizdeki işe tek tıkla başvurun.</p></div></div>
+        </div>
+
+        <div id="publicMainSection" class="row justify-content-center pt-3">
+            <div class="col-lg-9">
+                <div class="text-center mb-4">
+                    <div class="nav-segment">
+                        <button id="pubTabJobs" class="active" onclick="switchPublicTab('jobs')"><i class="bi bi-briefcase me-2"></i>Aktif İlanları Keşfet</button>
+                        <button id="pubTabCompanies" onclick="switchPublicTab('companies')"><i class="bi bi-buildings me-2"></i>Şirketleri İncele</button>
+                    </div>
+                </div>
+                <div id="publicJobsSection">
+                    <div class="d-flex justify-content-between align-items-end mb-4">
+                        <div><h4 class="fw-bolder mb-1">Güncel İş İlanları</h4></div>
+                        <span class="badge bg-light text-primary border px-3 py-2 rounded-pill" id="publicJobsCount">0 İlan</span>
+                    </div>
+                    <div id="publicJobsList"></div>
+                </div>
+                <div id="publicCompaniesSection" class="hidden">
+                    <div class="d-flex justify-content-between align-items-end mb-4"><div><h4 class="fw-bolder mb-1">Şirketleri Keşfet</h4></div></div>
+                    <input type="text" class="form-control mb-4" placeholder="Şirket adı ile ara..." onkeyup="renderPublicCompanies(this.value)">
+                    <div id="publicCompaniesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="authView" class="hidden login-wrapper">
+        <div class="login-box ui-card shadow-lg border-0">
+            <div class="nav-segment w-100 mb-4 d-flex">
+                <button id="tabLogin" class="flex-fill active" onclick="switchAuthTab('login')">Giriş Yap</button>
+                <button id="tabRegister" class="flex-fill" onclick="switchAuthTab('register')">Kayıt Ol</button>
+            </div>
+            
+            <form id="formLogin" onsubmit="login(event)">
+                <div class="mb-3"><label class="form-label">E-Posta</label><input type="email" id="loginEmail" class="form-control" required></div>
+                <div class="mb-4"><label class="form-label">Şifre</label><input type="password" id="loginPassword" class="form-control" required></div>
+                <button type="submit" class="btn btn-indigo w-100 py-2 mb-2">Sisteme Gir</button>
+            </form>
+
+            <form id="formRegister" class="hidden" onsubmit="register(event)">
+                <div class="mb-3">
+                    <label class="form-label d-block text-center">Hesap Türü</label>
+                    <div class="d-flex justify-content-center gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="regRole" id="roleSeeker" value="SEEKER" checked onchange="toggleRegFields()">
+                            <label class="form-check-label fw-semibold" for="roleSeeker">İş Arayanım</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="regRole" id="roleEmployer" value="EMPLOYER" onchange="toggleRegFields()">
+                            <label class="form-check-label fw-semibold" for="roleEmployer">İş Verenim</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="seekerRegFields">
+                    <div class="col-6 mb-3"><label class="form-label">Ad</label><input type="text" id="regFirstName" class="form-control" required></div>
+                    <div class="col-6 mb-3"><label class="form-label">Soyad</label><input type="text" id="regLastName" class="form-control" required></div>
+                </div>
+
+                <div class="mb-3 hidden" id="employerRegFields">
+                    <label class="form-label text-primary">Şirketinizin Adı</label>
+                    <input type="text" id="regCompanyName" class="form-control border-primary" placeholder="Örn: KariyerTech A.Ş.">
+                </div>
+
+                <div class="mb-3"><label class="form-label">E-Posta</label><input type="email" id="regEmail" class="form-control" required></div>
+                <div class="mb-4"><label class="form-label">Şifre</label><input type="password" id="regPassword" class="form-control" required></div>
+                
+                <button type="submit" class="btn btn-indigo w-100 py-2 mb-2">Hesap Oluştur</button>
+            </form>
+
+            <div class="text-center mt-3 border-top pt-3"><button class="btn btn-sm btn-link text-muted text-decoration-none" onclick="loadPublicView()"><i class="bi bi-arrow-left"></i> Ana Sayfaya Dön</button></div>
+        </div>
+    </div>
+
+    <div id="employerView" class="hidden">
+        <div class="text-center">
+            <div class="nav-segment" id="employerNav">
+                <button class="active" onclick="switchView('emp', 'myJobs', this)"><i class="bi bi-kanban me-2"></i>İlanlarım & Başvurular</button>
+                <button onclick="switchView('emp', 'newJob', this)"><i class="bi bi-plus-circle me-2"></i>Yeni İlan Aç</button>
+                <button onclick="switchView('emp', 'profile', this)"><i class="bi bi-building me-2"></i>Şirket Bilgileri</button>
+                <button onclick="switchView('emp', 'companies', this)"><i class="bi bi-buildings me-2"></i>Diğer Şirketler</button>
+                <button onclick="switchView('emp', 'comments', this)"><i class="bi bi-star me-2"></i>Yorumlar & Puanlar</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div id="emp-myJobs"><div id="employerJobsList"></div></div>
+                <div id="emp-applicantsView" class="hidden ui-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0 text-primary" id="applicantJobTitle">İlan Başvuruları</h5>
+                        <button class="btn btn-sm btn-light border" onclick="backToJobsList()"><i class="bi bi-arrow-left"></i> İlanlara Dön</button>
+                    </div>
+                    <div id="applicantListContainer"></div>
+                </div>
+                <div id="emp-newJob" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4">Yeni İlan Oluştur</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3"><label class="form-label">Alınacak Kişi Sayısı</label><input type="number" id="jobCount" class="form-control" required></div>
+                        <div class="col-md-6 mb-3"><label class="form-label text-danger">İlan Bitiş Tarihi</label><input type="date" id="jobEndDate" class="form-control" required></div>
+                    </div>
+                    <div class="mb-4"><label class="form-label">İlan Detayı</label><textarea id="jobDesc" class="form-control" rows="4" required></textarea></div>
+                    <button class="btn btn-indigo px-5" onclick="createJob()">İlanı Yayınla</button>
+                </div>
+                <div id="emp-profile" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4 text-primary">Şirket Profilini Güncelle</h5>
+                    <form onsubmit="updateCompanyProfile(event)">
+                        <div class="row">
+                            <div class="col-md-8 mb-3"><label class="form-label">Şirket Adı</label><input type="text" id="compName" class="form-control" required></div>
+                            <div class="col-md-4 mb-3"><label class="form-label">Çalışan Sayısı</label><input type="number" id="compEmpCount" class="form-control"></div>
+                            <div class="col-12 mb-4"><label class="form-label">Şirket Açıklaması</label><textarea id="compDesc" class="form-control" rows="3"></textarea></div>
+                        </div>
+                        <h6 class="fw-bold mb-3 text-muted"><i class="bi bi-geo-alt"></i> Adres Bilgileri</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3"><label class="form-label">Şehir (City)</label><input type="text" id="compCity" class="form-control"></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">İlçe (District)</label><input type="text" id="compDistrict" class="form-control"></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Mahalle (Neighbrood)</label><input type="text" id="compNeighborhood" class="form-control"></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Sokak (Street)</label><input type="text" id="compStreet" class="form-control"></div>
+                        </div>
+                        <h6 class="fw-bold mb-3 text-danger"><i class="bi bi-shield-lock"></i> Güvenlik Ayarları</h6>
+                        <div class="row bg-light p-3 rounded border mb-4 mx-0">
+                            <div class="col-md-12 mb-4 border-bottom pb-3"><label class="form-label fw-bold text-muted">Kayıtlı E-posta Adresi</label><input type="email" id="compEmail" class="form-control text-muted" disabled></div>
+                            <div class="col-md-6 mb-2"><label class="form-label">Yeni Şifre</label><input type="password" id="compNewPass" class="form-control"></div>
+                            <div class="col-md-6 mb-2"><label class="form-label">Yeni Şifre (Tekrar)</label><input type="password" id="compNewPassConfirm" class="form-control"></div>
+                        </div>
+                        <button type="submit" class="btn btn-indigo px-5"><i class="bi bi-save me-2"></i> Bilgileri Kaydet</button>
+                    </form>
+                </div>
+                <div id="emp-companies" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4">Sistemdeki Diğer Şirketleri Keşfet</h5>
+                    <input type="text" class="form-control mb-4" placeholder="Şirket adı ile ara..." onkeyup="renderEmployerCompanies(this.value)">
+                    <div id="employerCompaniesList"></div>
+                </div>
+                <div id="emp-comments" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4 text-primary">Şirket Değerlendirmeleri</h5>
+                    <div id="companyCommentsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="seekerView" class="hidden">
+        <div class="text-center">
+            <div class="nav-segment" id="seekerNav">
+                <button class="active" onclick="switchView('seek', 'allJobs', this)"><i class="bi bi-search me-2"></i>Tüm İlanlar</button>
+                <button onclick="switchView('seek', 'myApps', this)"><i class="bi bi-briefcase me-2"></i>Başvurularım</button>
+                <button onclick="switchView('seek', 'companies', this)"><i class="bi bi-buildings me-2"></i>Şirketler</button>
+                <button onclick="switchView('seek', 'profile', this)"><i class="bi bi-person-circle me-2"></i>Kişisel Bilgiler</button>
+                <button onclick="switchView('seek', 'cvBuilder', this)"><i class="bi bi-file-earmark-person me-2"></i>Özgeçmiş (CV)</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div id="seek-allJobs" class="ui-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">İş İlanları</h5>
+                        <button id="clearJobFilterBtn" class="btn btn-sm btn-outline-danger hidden" onclick="clearSeekerJobFilter()"><i class="bi bi-x-circle me-1"></i>Filtreyi Temizle</button>
+                    </div>
+                    <div id="allJobsList"></div>
+                    <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
+                        <button class="btn btn-light border btn-sm px-3 fw-bold" onclick="prevPage()"><i class="bi bi-chevron-left"></i></button>
+                        <span id="pageInfo" class="fw-bold text-muted small">Sayfa 1</span>
+                        <button class="btn btn-light border btn-sm px-3 fw-bold" onclick="nextPage()"><i class="bi bi-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div id="seek-myApps" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4">Başvuru Geçmişim</h5>
+                    <div id="myApplicationsList"></div>
+                </div>
+
+                <div id="seek-companies" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4">Sistemdeki Şirketleri Keşfet</h5>
+                    <div class="mb-4">
+                        <input type="text" class="form-control" placeholder="Şirket adı ile ara..." onkeyup="renderSeekerCompanies(this.value)">
+                    </div>
+                    <div id="seekerCompaniesList"></div>
+                </div>
+
+                <!--<div id="seek-profile" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4 text-primary">Kişisel Bilgiler & Adres</h5>
+                    <form onsubmit="updateSeekerProfile(event)">
+                        <div class="row mb-4"><div class="col-md-6 mb-3"><label class="form-label">Ad</label><input type="text" id="seekFirstName" class="form-control" required></div><div class="col-md-6 mb-3"><label class="form-label">Soyad</label><input type="text" id="seekLastName" class="form-control" required></div><div class="col-md-6 mb-3"><label class="form-label">Telefon</label><input type="text" id="seekPhone" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Doğum Tarihi</label><input type="date" id="seekBirthDate" class="form-control"></div></div>
+                        <h6 class="fw-bold mb-3 text-muted"><i class="bi bi-geo-alt"></i> Adres Bilgileri</h6>
+                        <div class="row mb-4"><div class="col-md-6 mb-3"><label class="form-label">Şehir (City)</label><input type="text" id="seekCity" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">İlçe (District)</label><input type="text" id="seekDistrict" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Mahalle (Neighbrood)</label><input type="text" id="seekNeighborhood" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Sokak (Street)</label><input type="text" id="seekStreet" class="form-control"></div></div>
+                        <button type="submit" class="btn btn-indigo px-5"><i class="bi bi-save me-2"></i> Kaydet</button>
+                    </form>
+                </div>-->
+				<div id="seek-profile" class="hidden ui-card">
+    <h5 class="fw-bold mb-4 text-primary">Kişisel Bilgiler & Adres</h5>
+    <form onsubmit="updateSeekerProfile(event)">
+        <div class="row mb-4"><div class="col-md-6 mb-3"><label class="form-label">Ad</label><input type="text" id="seekFirstName" class="form-control" required></div><div class="col-md-6 mb-3"><label class="form-label">Soyad</label><input type="text" id="seekLastName" class="form-control" required></div><div class="col-md-6 mb-3"><label class="form-label">Telefon</label><input type="text" id="seekPhone" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Doğum Tarihi</label><input type="date" id="seekBirthDate" class="form-control"></div></div>
+        <h6 class="fw-bold mb-3 text-muted"><i class="bi bi-geo-alt"></i> Adres Bilgileri</h6>
+        <div class="row mb-4"><div class="col-md-6 mb-3"><label class="form-label">Şehir (City)</label><input type="text" id="seekCity" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">İlçe (District)</label><input type="text" id="seekDistrict" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Mahalle (Neighbrood)</label><input type="text" id="seekNeighborhood" class="form-control"></div><div class="col-md-6 mb-3"><label class="form-label">Sokak (Street)</label><input type="text" id="seekStreet" class="form-control"></div></div>
+        <h6 class="fw-bold mb-3 text-danger mt-4"><i class="bi bi-shield-lock"></i> Güvenlik Ayarları</h6>
+        <div class="row bg-light p-3 rounded border mb-4 mx-0"><div class="col-md-12 mb-4 border-bottom pb-3"><label class="form-label fw-bold text-muted">Kayıtlı E-posta Adresi</label><input type="email" id="seekEmail" class="form-control text-muted" disabled></div><div class="col-md-6 mb-2"><label class="form-label">Yeni Şifre</label><input type="password" id="seekNewPass" class="form-control" placeholder="Boş bırakılabilir"></div><div class="col-md-6 mb-2"><label class="form-label">Yeni Şifre (Tekrar)</label><input type="password" id="seekNewPassConfirm" class="form-control"></div></div>
+        <button type="submit" class="btn btn-indigo px-5"><i class="bi bi-save me-2"></i> Kaydet</button>
+    </form>
+</div>
+
+                <div id="seek-cvBuilder" class="hidden ui-card">
+                    <h5 class="fw-bold mb-4 text-primary">Özgeçmiş (CV) Yönetimi</h5>
+                    <div class="mb-5"><h6 class="fw-bold text-muted mb-2"><i class="bi bi-person-lines-fill"></i> Hakkımda (Bio)</h6><textarea id="seekBio" class="form-control mb-2" rows="3"></textarea><button class="btn btn-sm btn-primary" onclick="saveCvBio()">Biyografiyi Kaydet</button></div>
+                    <div class="mb-5"><h6 class="fw-bold text-muted mb-2 border-bottom pb-2">Eğitim Bilgileri</h6><div id="cvSchoolList" class="mb-3"></div><div class="bg-light p-3 border rounded"><div class="row"><div class="col-md-6 mb-2"><input type="text" id="newSchoolName" class="form-control form-control-sm" placeholder="Okul Adı"></div><div class="col-md-6 mb-2"><select id="newSchoolType" class="form-select form-select-sm"><option value="PRIMARY_SCHOOL">İlkokul</option><option value="MIDDLE_SCHOOL">Ortaokul</option><option value="HIGH_SCHOOL">Lise</option><option value="ASSOCIATE" selected>Ön Lisans</option><option value="BACHELOR">Lisans</option><option value="MASTER">Yüksek Lisans</option></select></div><div class="col-md-8 mb-2"><input type="text" id="newSchoolDesc" class="form-control form-control-sm" placeholder="Bölüm"></div><div class="col-md-4 mb-2"><input type="number" id="newSchoolPoint" class="form-control form-control-sm" placeholder="Puan"></div><div class="col-md-6 mb-2"><label class="form-label" style="font-size:0.7rem;">Başlangıç</label><input type="date" id="newSchoolStartDate" class="form-control form-control-sm"></div><div class="col-md-6 mb-2"><label class="form-label" style="font-size:0.7rem;">Bitiş</label><input type="date" id="newSchoolEndDate" class="form-control form-control-sm"></div></div><button class="btn btn-sm btn-outline-indigo w-100" onclick="addSchoolToCv()">Ekle</button></div></div>
+                    <div class="mb-5"><h6 class="fw-bold text-muted mb-2 border-bottom pb-2">Deneyimler</h6><div id="cvExperienceList" class="mb-3"></div><div class="bg-light p-3 border rounded"><div class="row"><div class="col-md-12 mb-2"><input type="text" id="newExpName" class="form-control form-control-sm" placeholder="Şirket Adı / Pozisyon"></div><div class="col-md-6 mb-2"><label class="form-label" style="font-size:0.7rem;">Başlangıç</label><input type="date" id="newExpStart" class="form-control form-control-sm"></div><div class="col-md-6 mb-2"><label class="form-label" style="font-size:0.7rem;">Bitiş</label><input type="date" id="newExpEnd" class="form-control form-control-sm"></div></div><button class="btn btn-sm btn-outline-indigo w-100" onclick="addExperienceToCv()">Ekle</button></div></div>
+                    <div class="mb-3"><h6 class="fw-bold text-muted mb-2 border-bottom pb-2">Yabancı Diller</h6><div id="cvLanguageList" class="mb-3"></div><div class="bg-light p-3 border rounded d-flex gap-2"><input type="text" id="newLangName" class="form-control form-control-sm" placeholder="Dil"><select id="newLangLevel" class="form-select form-select-sm"><option value="A1">A1</option><option value="A2">A2</option><option value="B1" selected>B1</option><option value="B2" selected>B2</option><option value="C1">C1</option><option value="C2">C2</option></select><button class="btn btn-sm btn-outline-indigo" onclick="addLanguageToCv()">Ekle</button></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sharedCompanyProfileModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content border-0 shadow"><div class="modal-header bg-light border-bottom-0"><h4 class="modal-title fw-bold text-primary" id="scpmName">Şirket</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body pt-4" id="scpmBody"></div></div></div></div>
+<div class="modal fade" id="cvModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header bg-light border-bottom-0 pb-0"><h5 class="modal-title fw-bold text-primary" id="cvModalName">Aday CV</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body pt-4" id="cvModalBody"></div></div></div></div>
+<div class="modal fade" id="companyRateModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow"><div class="modal-header bg-light border-bottom-0 pb-0"><h5 class="modal-title fw-bold text-primary" id="companyRateModalName">Değerlendir</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body pt-4"><form onsubmit="submitCompanyRate(event)"><div class="mb-3"><label class="form-label">Puanınız</label><select id="ratePoint" class="form-select" required><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select></div><div class="mb-3"><label class="form-label">Yorum</label><textarea id="rateText" class="form-control" rows="3" required></textarea></div><button type="submit" class="btn btn-indigo w-100">Gönder</button></form></div></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function switchView(role, viewId, btnElement) {
+        const navId = role === 'emp' ? 'employerNav' : 'seekerNav';
+        document.querySelectorAll(`#${navId} button`).forEach(btn => btn.classList.remove('active'));
+        if(btnElement) btnElement.classList.add('active');
+
+        const views = role === 'emp' ? ['myJobs', 'newJob', 'profile', 'applicantsView', 'comments', 'companies'] : ['allJobs', 'myApps', 'companies', 'profile', 'cvBuilder'];
+        views.forEach(v => { const el = document.getElementById(`${role}-${v}`); if(el) el.classList.add('hidden'); });
+        document.getElementById(`${role}-${viewId}`).classList.remove('hidden');
+
+        if (role === 'emp') {
+            if (viewId === 'profile') loadCompanyProfile();
+            if (viewId === 'comments') renderCompanyComments();
+            if (viewId === 'companies') renderEmployerCompanies('');
+        } else if (role === 'seek') {
+            if (viewId === 'profile') loadSeekerProfile();
+            if (viewId === 'cvBuilder') loadSeekerCv(); 
+            if (viewId === 'companies') renderSeekerCompanies('');
+        }
+    }
+
+    function switchPublicTab(tab) {
+        document.getElementById('pubTabJobs').classList.remove('active');
+        document.getElementById('pubTabCompanies').classList.remove('active');
+        document.getElementById('publicJobsSection').classList.add('hidden');
+        document.getElementById('publicCompaniesSection').classList.add('hidden');
+
+        if(tab === 'jobs') {
+            document.getElementById('pubTabJobs').classList.add('active');
+            document.getElementById('publicJobsSection').classList.remove('hidden');
+            renderPublicJobsList();
+        } else {
+            document.getElementById('pubTabCompanies').classList.add('active');
+            document.getElementById('publicCompaniesSection').classList.remove('hidden');
+            renderPublicCompanies('');
+        }
+    }
+
+    // YENİ: Kayıt Formu Radio Buton Değişim Dinleyicisi
+    function toggleRegFields() {
+        const role = document.querySelector('input[name="regRole"]:checked').value;
+        if (role === 'SEEKER') {
+            document.getElementById('seekerRegFields').classList.remove('hidden');
+            document.getElementById('employerRegFields').classList.add('hidden');
+            document.getElementById('regFirstName').required = true;
+            document.getElementById('regLastName').required = true;
+            document.getElementById('regCompanyName').required = false;
+        } else {
+            document.getElementById('seekerRegFields').classList.add('hidden');
+            document.getElementById('employerRegFields').classList.remove('hidden');
+            document.getElementById('regFirstName').required = false;
+            document.getElementById('regLastName').required = false;
+            document.getElementById('regCompanyName').required = true;
+        }
+    }
+</script>
+<script src="app.js"></script>
+</body>
+</html>
